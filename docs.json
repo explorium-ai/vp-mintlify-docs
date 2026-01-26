@@ -12,15 +12,19 @@
         "icon": "wave-pulse",
         "pages": [
           "overview",
-          "vibe-prospecting/untitled-page",
-          "vibe-prospecting/untitled-page-1",
-          "vibe-prospecting/untitled-page-2",
-          "vibe-prospecting/untitled-page-3",
-          "vibe-prospecting/untitled-page-4",
-          "vibe-prospecting/untitled-page-5"
+          "vibe-prospecting/getting-started",
+          "vibe-prospecting/advanced-filters",
+          "vibe-prospecting/best-practices",
+          "vibe-prospecting/hub",
+          "vibe-prospecting/troubleshooting",
+          "vibe-prospecting/tips-and-tricks"
         ]
       }
     ]
   },
-  "logo": "/images/Vibe-Prosoecting-Logotype.png"
+  "logo": {
+    "light": "/images/Vibe-Prosoecting-Logotype.png",
+    "dark": "/images/Vibe-Prosoecting-Logotype.png",
+    "href": "https://www.vibeprospecting.ai"
+  }
 }
