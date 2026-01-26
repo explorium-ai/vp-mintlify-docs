@@ -11,7 +11,13 @@
         "tab": "Vibe Prospecting",
         "icon": "wave-pulse",
         "pages": [
-          "overview"
+          "overview",
+          "vibe-prospecting/untitled-page",
+          "vibe-prospecting/untitled-page-1",
+          "vibe-prospecting/untitled-page-2",
+          "vibe-prospecting/untitled-page-3",
+          "vibe-prospecting/untitled-page-4",
+          "vibe-prospecting/untitled-page-5"
         ]
       }
     ]
