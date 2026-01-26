@@ -1,0 +1,19 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Documentation",
+  "colors": {
+    "primary": "#0D9373"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Vibe Prospecting",
+        "icon": "wave-pulse",
+        "pages": [
+          "overview"
+        ]
+      }
+    ]
+  }
+}
