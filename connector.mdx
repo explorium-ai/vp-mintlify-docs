@@ -1,0 +1,176 @@
+---
+title: "Install the Connector (MCP)"
+sidebarTitle: "Connector (MCP)"
+description: "Connect Vibe Prospecting to Claude, Gemini CLI, or any MCP-compatible client and start prospecting with live B2B data in minutes."
+icon: "plug"
+---
+
+The Vibe Prospecting connector is a remote [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server that gives any compatible AI client live access to Explorium's B2B data — 150M\+ companies and 800M\+ professionals across 50\+ data sources. Once connected, you can search companies, discover contacts, enrich records, and export lead lists directly from your chat.
+
+<Info>
+  **Connector or plugin?** The connector is the fastest way to use Vibe Prospecting in chat-based clients like Claude.ai and Gemini CLI. If you work in **Claude Code** or **OpenAI Codex** and want file I/O, CSV workflows, and repeatable multi-step automations, use the [Vibe Prospecting Plugin](/installation/plugin) instead.
+</Info>
+
+## Prerequisites
+
+- A Vibe Prospecting account — sign up free at [vibeprospecting.ai](https://www.vibeprospecting.ai)
+- An MCP-compatible client (Claude.ai, Claude Desktop, Gemini CLI, Cursor, and others)
+
+Authentication is handled via OAuth in your browser. **No API key is required.**
+
+## Connector URL
+
+If your client asks for a remote MCP server URL, use:
+
+```text
+https://vibeprospecting.explorium.ai/mcp
+```
+
+## Installation
+
+<Tabs>
+  <Tab title="Claude.ai">
+    Vibe Prospecting is listed in Claude's connectors directory, so setup takes under a minute.
+
+    <Steps>
+      <Step title="Open connector settings">
+        In [Claude.ai](https://claude.ai), go to **Settings → Connectors**.
+      </Step>
+      <Step title="Find Vibe Prospecting">
+        Click **Browse connectors** and search for **Vibe Prospecting**.
+      </Step>
+      <Step title="Connect and authorize">
+        Click **Connect**. A browser window opens for OAuth — sign in with your Vibe Prospecting account and approve access.
+      </Step>
+      <Step title="Enable it in your chat">
+        In a conversation, open the tools menu and make sure **Vibe Prospecting** is toggled on.
+      </Step>
+    </Steps>
+
+    <Tip>
+      Can't find it in the directory? Add it manually via **Settings → Connectors → Add custom connector** and paste the connector URL above.
+    </Tip>
+  </Tab>
+  <Tab title="Claude Desktop">
+    <Steps>
+      <Step title="Open connector settings">
+        In Claude Desktop, go to **Settings → Connectors**.
+      </Step>
+      <Step title="Add the connector">
+        Search the directory for **Vibe Prospecting**, or choose **Add custom connector** and paste:
+
+        ```text
+        https://vibeprospecting.explorium.ai/mcp
+        ```
+      </Step>
+      <Step title="Authorize">
+        Complete the OAuth sign-in in your browser when prompted.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Gemini CLI">
+    Install the extension directly from the open-source repository:
+
+    ```bash
+    gemini extensions install https://github.com/explorium-ai/vibeprospecting-mcp
+    ```
+
+    For local development, link a cloned copy instead:
+
+    ```bash
+    gemini extensions link /path/to/vibeprospecting-mcp
+    ```
+
+    The extension is loaded and managed automatically by Gemini CLI, and OAuth authentication is handled on first use. See the [Gemini CLI extensions documentation](https://geminicli.com/docs/extensions/) for more.
+  </Tab>
+  <Tab title="Other MCP clients">
+    Any client that supports **remote MCP servers with OAuth** can connect. Add the server to your client's MCP configuration. For example, in Cursor (`~/.cursor/mcp.json`):
+
+    ```json
+    {
+      "mcpServers": {
+        "vibe-prospecting": {
+          "url": "https://vibeprospecting.explorium.ai/mcp"
+        }
+      }
+    }
+    ```
+
+    Restart the client and complete the OAuth prompt on first use. Refer to your client's documentation for the exact configuration format.
+  </Tab>
+</Tabs>
+
+## Verify the connection
+
+Send a simple prospecting prompt in a new chat:
+
+```text
+Find 5 B2B SaaS companies in the US with 200–1,000 employees
+```
+
+<Check>
+  If the assistant calls Vibe Prospecting tools (such as `fetch-entities`) and returns a sample of real companies with a cost estimate, you're connected.
+</Check>
+
+## Try these prompts
+
+```text Partnership research
+Who should I contact for a partnership with monday.com? Bring me all the contact details you can find.
+```
+
+```text Leadership discovery
+Get the engineering leadership team at Palo Alto Networks.
+```
+
+```text Targeted list building
+Find CTOs at fintech companies in New York that raised funding in the last 90 days.
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The connector doesn't appear in my tools">
+    Make sure the connector is enabled for the current conversation (check the tools menu), then start a new chat. In Gemini CLI, restart the CLI after installing the extension.
+  </Accordion>
+
+  <Accordion title="Authentication errors or expired session">
+    Disconnect the connector in your client's settings, reconnect, and complete the OAuth flow again. Confirm you're signing in with the account registered at [vibeprospecting.ai](https://www.vibeprospecting.ai).
+  </Accordion>
+
+  <Accordion title="Empty results">
+    Your filters may be too narrow. Broaden the criteria or reduce the number of required filters — see [Best Practices](/vibe-prospecting/best-practices).
+  </Accordion>
+
+  <Accordion title="Something else">
+    Check the general [Troubleshooting](/vibe-prospecting/troubleshooting) guide, or contact [support@vibeprospecting.ai](mailto:support@vibeprospecting.ai).
+  </Accordion>
+</AccordionGroup>
+
+## Connector vs. plugin
+
+|  | Connector (MCP) | [Plugin](/installation/plugin) |
+| --- | --- | --- |
+| **Runs in** | Claude.ai, Claude Desktop, Gemini CLI, other MCP clients | Claude Code, OpenAI Codex |
+| **Best for** | Conversational prospecting, research, quick lists | File-based workflows, CSV enrichment, repeatable automations |
+| **Setup** | One-click connect \+ OAuth | CLI install \+ OAuth login |
+| **Output** | In-chat results and exports | CSV/JSON files, CRM-ready exports |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="rocket" href="/vibe-prospecting/getting-started">
+    Learn how to structure queries and run your first search.
+  </Card>
+
+  <Card title="Advanced Filters" icon="filter" href="/vibe-prospecting/advanced-filters">
+    Target with 20\+ business and prospect attributes.
+  </Card>
+
+  <Card title="Install the Plugin" icon="puzzle-piece" href="/installation/plugin">
+    Use Vibe Prospecting inside Claude Code and Codex.
+  </Card>
+
+  <Card title="Best Practices" icon="star" href="/vibe-prospecting/best-practices">
+    Get better results and use credits efficiently.
+  </Card>
+</CardGroup>

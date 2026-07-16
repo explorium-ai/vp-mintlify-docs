@@ -1,0 +1,219 @@
+---
+title: "Install the Plugin (Claude Code & Codex)"
+sidebarTitle: "Plugin (Claude Code & Codex)"
+description: "Run B2B prospecting, enrichment, research, and GTM data workflows directly inside Claude Code and OpenAI Codex."
+icon: "puzzle-piece"
+---
+
+The Vibe Prospecting Plugin brings Explorium's B2B data platform into Claude-native developer environments. Instead of one-off chat exploration, GTM teams and AI agents can run repeatable, data-intensive workflows — search companies, discover contacts, match and enrich raw lead lists, and export structured CSV/JSON — from inside [Claude Code](https://claude.ai/code) or [OpenAI Codex](https://developers.openai.com/codex/plugins).
+
+<Info>
+  **Plugin or connector?** Prefer the plugin when you work in Claude Code or Codex — it adds skills, CLI tooling, and file-based workflows on top of the raw data tools. For Claude.ai, Claude Desktop, Gemini CLI, or other MCP clients, use the [Vibe Prospecting Connector](/installation/connector) instead.
+</Info>
+
+<Note>
+  The plugin is listed in the official [Anthropic Community Marketplace](https://github.com/anthropics/claude-plugins-community) — reviewed and approved by Anthropic for Claude Code users. The source is open on [GitHub](https://github.com/explorium-ai/vibeprospecting-plugin) under the MIT license.
+</Note>
+
+## Prerequisites
+
+- **Node.js 18\+** with `npx` available in your terminal
+- A Vibe Prospecting account — sign up free at [vibeprospecting.ai](https://www.vibeprospecting.ai)
+- Claude Code or OpenAI Codex installed
+
+## Step 1 — Install
+
+<Tabs>
+  <Tab title="Claude Code">
+    Install from the Anthropic Community Marketplace:
+
+    ```bash
+    claude plugin marketplace add anthropics/claude-plugins-community
+    claude plugin install vibe-prospecting@claude-community
+    ```
+
+    Restart Claude Code if the plugin, skill, or tools don't appear immediately.
+  </Tab>
+  <Tab title="OpenAI Codex">
+    Add the Vibe Prospecting GitHub repository as a plugin marketplace, then install the plugin from it:
+
+    ```bash
+    codex plugin marketplace add explorium-ai/vibeprospecting-plugin
+    codex plugin add vpai@vibeprospecting
+    ```
+
+    Restart Codex if the plugin, skill, or MCP tools don't appear immediately.
+  </Tab>
+  <Tab title="skills CLI">
+    Install the skill bundle from [skills.sh](https://skills.sh/explorium-ai/vibeprospecting-plugin) into any supported environment:
+
+    ```bash
+    npx skills add explorium-ai/vibeprospecting-plugin --all
+    ```
+  </Tab>
+</Tabs>
+
+## Step 2 — Authenticate
+
+Authentication is OAuth-based — there's no API key to copy for normal local use. Sign in once through the browser:
+
+```bash
+npx @vibeprospecting/vpai@latest login
+```
+
+Open the printed URL, approve access in your browser, then poll until sign-in completes:
+
+```bash
+npx @vibeprospecting/vpai@latest login --poll
+```
+
+The CLI saves credentials to `~/.config/vpai/config.json`. Later sessions reuse them automatically — you only do this once.
+
+<Accordion title="Switch accounts or sign out">
+  ```bash
+  npx @vibeprospecting/vpai@latest logout
+  ```
+
+  Then run `login` again with the other account.
+</Accordion>
+
+## Step 3 — Verify
+
+```bash
+npx @vibeprospecting/vpai@latest --help
+```
+
+<Check>
+  If the help output lists tools like `match-business` and `fetch-entities`, you're ready to go.
+</Check>
+
+## Run your first workflow
+
+Paste this into Claude Code or Codex:
+
+```text
+Find 50 B2B SaaS companies in the US with 200 to 1,000 employees.
+For each company, find the VP of Marketing or Head of Growth and return
+name, title, company, LinkedIn URL, email if available, and company domain.
+```
+
+The plugin samples the workflow on a handful of entities first, shows you a preview with an estimated cost, and waits for your approval before running at full scale — so you never spend credits by surprise.
+
+| company\_name | domain | contact\_name | title | linkedin\_url | email | confidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| ExampleCo | exampleco.com | Jane Smith | VP Marketing | linkedin.com/in/janesmith | [jane@exampleco.com](mailto:jane@exampleco.com) | high |
+
+## What's included
+
+Full parameter documentation lives in the plugin's [SKILL.md](https://github.com/explorium-ai/vibeprospecting-plugin/blob/main/skills/vibe-prospecting/SKILL.md).
+
+## Example use cases
+
+<AccordionGroup>
+  <Accordion title="Enrich CRM records from a CSV">
+    ```text
+    Take this CSV of Salesforce leads. Match each person by email, LinkedIn URL,
+    or name and company. Add current title, company domain, LinkedIn URL, work
+    email, phone if available, headcount, revenue, and industry. Export a clean
+    CSV for CRM update.
+    ```
+  </Accordion>
+
+  <Accordion title="Find work emails from LinkedIn URLs">
+    ```text
+    For each LinkedIn URL in this CSV, match the person to a professional
+    profile and return work email, current company, title, company domain,
+    and confidence level.
+    ```
+  </Accordion>
+
+  <Accordion title="Score inbound leads against your ICP">
+    ```text
+    Enrich these inbound leads, identify their companies, add headcount,
+    revenue range, and industry, and score each lead from 1 to 5 based on
+    ICP fit for a mid-market B2B SaaS sales motion.
+    ```
+  </Accordion>
+
+  <Accordion title="Chain a multi-step GTM workflow">
+    ```text
+    Find 500 B2B SaaS companies in the US with 200 to 1,000 employees.
+    Enrich each company with LinkedIn posts and keep only companies that have
+    the keyword "event" in one of their posts. For the remaining companies,
+    find the head of growth or a similar senior growth/marketing leader.
+    Return the results as a CSV with these columns:
+    name, title, company, linkedin_url, professional_email, company_domain
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Plugin not recognized in Claude Code">
+    Re-run the install commands from [Step 1](#step-1-install), then restart Claude Code.
+  </Accordion>
+
+  <Accordion title="Plugin not recognized in Codex">
+    If the marketplace is missing or stale, run:
+
+    ```bash
+    codex plugin marketplace upgrade vibeprospecting
+    codex plugin add vpai@vibeprospecting
+    ```
+
+    If the plugin is installed but disabled, set `enabled = true` under `[plugins."vpai@vibeprospecting"]` in `~/.codex/config.toml`. Restart Codex after any install or upgrade.
+  </Accordion>
+
+  <Accordion title="Tools fail with authentication errors">
+    Your session may have expired. Re-run the login flow:
+
+    ```bash
+    npx @vibeprospecting/vpai@latest login
+    npx @vibeprospecting/vpai@latest login --poll
+    ```
+  </Accordion>
+
+  <Accordion title="Empty results">
+    Filters may be too narrow. Broaden your ICP criteria or reduce the number of required filters.
+  </Accordion>
+
+  <Accordion title="Low email match rate">
+    Not every contact has a verified work email. Request enrichment with a confidence threshold — availability varies by contact.
+  </Accordion>
+
+  <Accordion title="Slow workflows">
+    Large result sets or multi-step enrichment take time. Reduce the batch size or break the workflow into smaller steps.
+  </Accordion>
+</AccordionGroup>
+
+Still stuck? Open an issue on [GitHub](https://github.com/explorium-ai/vibeprospecting-plugin/issues) or email [support@vibeprospecting.ai](mailto:support@vibeprospecting.ai).
+
+## Plugin vs. connector
+
+|  | Plugin | [Connector (MCP)](/installation/connector) |
+| --- | --- | --- |
+| **Runs in** | Claude Code, OpenAI Codex | Claude.ai, Claude Desktop, Gemini CLI, other MCP clients |
+| **Best for** | GTM engineers, growth devs, data teams running file-based workflows | Conversational prospecting and research in chat |
+| **Output** | CSV files, JSON, CRM-ready exports, automations | In-chat results and exports |
+| **Use when** | Enriching CSVs, connecting to HubSpot or Salesforce, recurring workflows, chaining multi-step operations | You want the fastest path to live B2B data in chat |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="rocket" href="/vibe-prospecting/getting-started">
+    Learn query structure and run your first search.
+  </Card>
+
+  <Card title="Install the Connector" icon="plug" href="/installation/connector">
+    Use Vibe Prospecting in Claude.ai, Gemini CLI, and more.
+  </Card>
+
+  <Card title="Best Practices" icon="star" href="/vibe-prospecting/best-practices">
+    Get better results and use credits efficiently.
+  </Card>
+
+  <Card title="Tips & Tricks" icon="lightbulb" href="/vibe-prospecting/tips-and-tricks">
+    Power-user techniques for faster prospecting.
+  </Card>
+</CardGroup>
