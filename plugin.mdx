@@ -1,5 +1,8 @@
 ---
-title: "plugin"
+title: "Install the Plugin (Claude Code & Codex)"
+sidebarTitle: "Plugin (Claude Code & Codex)"
+description: "Run B2B prospecting, enrichment, research, and GTM data workflows directly inside Claude Code and OpenAI Codex."
+icon: "puzzle-piece"
 ---
 
 The Vibe Prospecting Plugin brings Explorium's B2B data platform into Claude-native developer environments. Instead of one-off chat exploration, GTM teams and AI agents can run repeatable, data-intensive workflows — search companies, discover contacts, match and enrich raw lead lists, and export structured CSV/JSON — from inside [Claude Code](https://claude.ai/code) or [OpenAI Codex](https://developers.openai.com/codex/plugins).
@@ -101,6 +104,21 @@ The plugin samples the workflow on a handful of entities first, shows you a prev
 | ExampleCo | exampleco.com | Jane Smith | VP Marketing | linkedin.com/in/janesmith | [jane@exampleco.com](mailto:jane@exampleco.com) | high |
 
 ## What's included
+
+| Tool | Description |
+| --- | --- |
+| `fetch-entities` | Search for companies or contacts by structured criteria |
+| `enrich-business` | Enrich a company record by domain or name |
+| `enrich-prospects` | Enrich a contact record by email, LinkedIn URL, or name and company |
+| `match-business` | Match a raw company record to a verified profile |
+| `match-prospects` | Match a raw contact record to a verified profile |
+| `fetch-entities-statistics` | Get counts or aggregate statistics for a filtered entity set |
+| `fetch-businesses-events` | Fetch recent business-level events for a company |
+| `fetch-prospects-events` | Fetch recent events for a specific contact |
+| `get-dataset` | Retrieve a previously built dataset or export |
+| `export-to-csv` | Export a result set as a structured CSV |
+| `autocomplete` | Autocomplete company or contact field values |
+| `estimate-cost` | Estimate credit cost for a planned query |
 
 Full parameter documentation lives in the plugin's [SKILL.md](https://github.com/explorium-ai/vibeprospecting-plugin/blob/main/skills/vibe-prospecting/SKILL.md).
 
