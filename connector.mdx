@@ -83,6 +83,59 @@ https://vibeprospecting.explorium.ai/mcp
 
     The extension is loaded and managed automatically by Gemini CLI, and OAuth authentication is handled on first use. See the [Gemini CLI extensions documentation](https://geminicli.com/docs/extensions/) for more.
   </Tab>
+  <Tab title="Manus">
+    Connect Vibe Prospecting from Manus's built-in connectors UI — no local server or API key needed.
+
+    <Steps>
+      <Step title="Open the connectors menu">
+        In Manus, open the **connectors** menu (or choose **\+ Add connectors**).
+      </Step>
+      <Step title="Find Vibe Prospecting">
+        Search for **`vibe`**. Under **Apps**, select **Vibe Prospecting** ("Build B2B lead lists and enrich companies and contacts").
+      </Step>
+      <Step title="Connect and sign in">
+        Confirm the connector details (MCP by Explorium), then click **Try it out** / connect and complete the browser sign-in.
+      </Step>
+    </Steps>
+
+    Once connected, use Vibe Prospecting from any Manus chat with prompts like the ones in [Try these prompts](#try-these-prompts).
+  </Tab>
+  <Tab title="Hermes">
+    Hermes uses the same remote endpoint, but its CLI needs the server written to config plus an explicit OAuth login.
+
+    <Steps>
+      <Step title="Register the server">
+        Write **both** keys directly under `mcp_servers:` — the namespace that `hermes mcp login` (and the runtime) read from:
+
+        ```bash
+        hermes config set mcp_servers.vibe_prospecting.url "https://vibeprospecting.explorium.ai/mcp"
+        hermes config set mcp_servers.vibe_prospecting.auth oauth
+        ```
+
+        <Warning>
+          Don't use `hermes mcp add`: in a non-interactive shell it can fail mid-way and save a disabled, half-written entry under `mcp_servers:` — `auth` set but `url` dropped — which then fails at login. Setting both keys yourself avoids this, and if you already hit it, the same two commands repair it. (A `url` showing up elsewhere in config doesn't count — `hermes mcp login` only reads `mcp_servers:`.)
+        </Warning>
+      </Step>
+      <Step title="Sign in">
+        This opens your browser to authenticate:
+
+        ```bash
+        hermes mcp login vibe_prospecting
+        ```
+
+        <Note>
+          On a **remote, SSH, or Docker** host, the browser can't reach the local callback after you approve — that's expected. Copy the **full URL** from the address bar and paste it back at the Hermes prompt.
+        </Note>
+      </Step>
+      <Step title="Verify and use">
+        Run `hermes mcp list` — `vibe_prospecting` should show as authenticated. Start a **new chat** so the `mcp_vibe_prospecting_*` tools load, then try a prompt from [Try these prompts](#try-these-prompts). To get a CSV, ask Hermes to **"export and download"** (exports return a link, not the file itself).
+      </Step>
+    </Steps>
+
+    <Tip>
+      Connection drops on the first call? The default MCP discovery timeout is too short for the OAuth handshake — raise it with `hermes config set mcp_discovery_timeout 10`.
+    </Tip>
+  </Tab>
   <Tab title="Other MCP clients">
     Any client that supports **remote MCP servers with OAuth** can connect. Add the server to your client's MCP configuration. For example, in Cursor (`~/.cursor/mcp.json`):
 
@@ -134,7 +187,7 @@ Find CTOs at fintech companies in New York that raised funding in the last 90 da
   </Accordion>
 
   <Accordion title="Authentication errors or expired session">
-    Disconnect the connector in your client's settings, reconnect, and complete the OAuth flow again. Confirm you're signing in with the account registered at [vibeprospecting.ai](https://www.vibeprospecting.ai).
+    Disconnect the connector in your client's settings, reconnect, and complete the OAuth flow again. In Hermes, run `hermes mcp login vibe_prospecting` again. Confirm you're signing in with the account registered at [vibeprospecting.ai](https://www.vibeprospecting.ai).
   </Accordion>
 
   <Accordion title="Empty results">
