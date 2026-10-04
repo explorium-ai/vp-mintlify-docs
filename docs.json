@@ -1,9 +1,31 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Documentation",
+  "name": "Vibe Prospecting",
   "colors": {
-    "primary": "#0D9373"
+    "primary": "#668DF7",
+    "light": "#56DEC0",
+    "dark": "#102B51"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://www.vibeprospecting.ai"
+  },
+  "fonts": {
+    "family": "Poppins",
+    "weight": 400,
+    "heading": {
+      "family": "Poppins",
+      "weight": 500
+    }
+  },
+  "background": {
+    "color": {
+      "light": "#FAFAFA",
+      "dark": "#102B51"
+    }
   },
   "navigation": {
     "tabs": [
@@ -29,10 +51,5 @@
         ]
       }
     ]
-  },
-  "logo": {
-    "light": "/images/Vibe-Prosoecting-Logotype.png",
-    "dark": "/images/Vibe-Prosoecting-Logotype.png",
-    "href": "https://www.vibeprospecting.ai"
   }
 }
